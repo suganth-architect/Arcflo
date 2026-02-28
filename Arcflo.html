@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARCFLOW.IO - Comprehensive Pitch Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0c0e;
+            --accent-color: #d8b056;
+            --text-main: #f0f0f0;
+            --text-muted: #8a8d93;
+            --card-bg: #151619;
+            --border-color: rgba(216, 176, 86, 0.2);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow: hidden; 
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding: 3rem 8vw;
+            box-sizing: border-box;
+            background-image: radial-gradient(circle at 80% 50%, rgba(216, 176, 86, 0.03) 0%, transparent 50%);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 1rem;
+            padding-bottom: 4rem; 
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--bg-color);
+        }
+
+        .slide-content::-webkit-scrollbar { width: 6px; }
+        .slide-content::-webkit-scrollbar-thumb { background-color: var(--accent-color); border-radius: 3px; }
+
+        .accent { color: var(--accent-color); }
+
+        .tagline-badge {
+            display: inline-block;
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        h1.title {
+            font-size: 7rem;
+            font-weight: 900;
+            line-height: 0.9;
+            margin: 0 0 1rem 0;
+            letter-spacing: -2px;
+        }
+
+        h2.massive {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0 0 2rem 0;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin: 0 0 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-top: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .card:hover { border-top: 2px solid var(--accent-color); }
+        .card h4 { font-size: 1.1rem; margin: 0 0 0.8rem 0; color: var(--text-main); }
+        .card p { font-size: 0.9rem; margin: 0; }
+
+        ul { color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
+        li { margin-bottom: 0.5rem; }
+        li strong { color: var(--text-main); }
+
+        .footer-metrics {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+        }
+
+        .metric-block span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .metric-block strong { font-size: 1rem; color: var(--accent-color); }
+
+        .nav-controls {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: var(--bg-color);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+        }
+
+        .slide-counter { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+    <div class="slide active">
+        <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="tagline-badge">— INVESTOR PRESENTATION · VERSION 3.0</div>
+            <h1 class="title">ARC<span class="accent">FLOW</span><br>.IO</h1>
+            <p style="font-size: 1.5rem; max-width: 700px; color: var(--text-main);">
+                The unified digital platform empowering the built environment.<br>
+                <span class="accent">From initial concept to final handover — seamlessly connected.</span>
+            </p>
+            
+            <div class="footer-metrics" style="margin-top: 4rem;">
+                <div class="metric-block"><span>Developed By</span><strong>D2V Architectural Consultancy</strong></div>
+                <div class="metric-block"><span>Founder</span><strong>Suganth</strong></div>
+                <div class="metric-block"><span>Location</span><strong>Chennai, India</strong></div>
+                <div class="metric-block"><span>Status</span><strong>Master Release</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">THE NORTH STAR</div>
+            <h2 class="massive">Every morning, the system answers <span class="accent">3 key questions</span> automatically.</h2>
+            
+            <div class="grid-3" style="margin-top: 3rem;">
+                <div class="card" style="border-left: 3px solid var(--accent-color);">
+                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">1. What requires my attention today?</h4>
+                </div>
+                <div class="card" style="border-left: 3px solid var(--accent-color);">
+                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">2. Where is each project in its lifecycle?</h4>
+                </div>
+                <div class="card" style="border-left: 3px solid var(--accent-color);">
+                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">3. Is the business financially healthy?</h4>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Core Design Philosophy</h3>
+            <div class="grid-3">
+                <div class="card">
+                    <h4>TRUTH BACKBONE</h4>
+                    <p>Legal-grade data trails ensuring zero compromises on operational integrity.</p>
+                </div>
+                <div class="card">
+                    <h4>AI WORKFORCE</h4>
+                    <p>Intelligent agents automate tracking and reporting, keeping humans in control.</p>
+                </div>
+                <div class="card">
+                    <h4>PLATFORM MEMORY</h4>
+                    <p>Continuously learns from historical vendor patterns, costs, and delay triggers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">THE PROBLEM</div>
+            <h2 class="massive">The industry faces <span class="accent">identical</span> bottlenecks.</h2>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h4 class="accent">Current Landscape</h4>
+                    <ul>
+                        <li>Relying on messaging apps leads to scattered communication.</li>
+                        <li>Verbal agreements result in undocumented decisions and disputes.</li>
+                        <li>Fabricated progress reports hide the actual site realities.</li>
+                        <li>Founders lack clear visibility into outstanding collections.</li>
+                        <li>Unbilled extra work causes massive profit leakage.</li>
+                    </ul>
+                </div>
+                <div class="card" style="background-color: rgba(216, 176, 86, 0.05);">
+                    <h4 class="accent">The Arcflow Solution</h4>
+                    <ul>
+                        <li>A centralized hub connecting the firm, clients, and suppliers.</li>
+                        <li>All decisions are formally logged, timestamped, and approved.</li>
+                        <li>Mandatory photo verification ensures accurate daily logs.</li>
+                        <li>Live financial dashboards feature predictive 90-day tracking.</li>
+                        <li>Automated shields detect and capture scope creep instantly.</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.2rem; margin-top: 1rem;"><strong>Firms keep repeating the same errors. We eliminate them entirely.</strong></p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">MARKET & ADAPTABILITY</div>
+            <h2 class="massive">The platform <span class="accent">shapes itself</span> to the firm.</h2>
+            <p>Based on onboarding selections, the UI dynamically adjusts visible modules, financial tracking modes, and permission settings.</p>
+            
+            <div class="grid-4">
+                <div class="card">
+                    <h4>Architecture / Design</h4>
+                    <p><strong>Revenue Model:</strong> Professional fee milestones.<br><strong>Pain Point:</strong> Uncompensated design revisions.<br><strong>Key Modules:</strong> BOQ, Spaces, Approvals, Files.</p>
+                </div>
+                <div class="card">
+                    <h4>Interior Execution</h4>
+                    <p><strong>Revenue Model:</strong> Client fees plus execution margins.<br><strong>Pain Point:</strong> Material delivery logistics.<br><strong>Key Modules:</strong> Inventory, Suppliers, Site Tracking.</p>
+                </div>
+                <div class="card">
+                    <h4>Construction / Civil</h4>
+                    <p><strong>Revenue Model:</strong> Running Account billing.<br><strong>Pain Point:</strong> Resource theft and schedule delays.<br><strong>Key Modules:</strong> Labour, Quality Verification, RA Billing.</p>
+                </div>
+                <div class="card">
+                    <h4>Trades & Contractors</h4>
+                    <p><strong>Revenue Model:</strong> Main contractor work orders.<br><strong>Pain Point:</strong> Lack of payment transparency.<br><strong>Key Modules:</strong> Submitted Bills, Work Orders, Materials.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">CORE MODULES 1/2</div>
+            <h2 class="massive">The <span class="accent">Operational</span> Hub</h2>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <h4>📋 RFI & Decision Tracking</h4>
+                    <p>The legal ledger capturing every client approval and site instruction.</p>
+                    <ul>
+                        <li>Links cost impacts directly to client sign-offs.</li>
+                        <li>Transforms pasted messaging chats into formal logs.</li>
+                        <li>Approved changes automatically draft payment milestones.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>✅ Advanced Task Engine</h4>
+                    <p>Structured workflows replacing chaotic chat group coordination.</p>
+                    <ul>
+                        <li>Smart blocking prevents tasks if dependencies are missing.</li>
+                        <li>Requires mandatory photographic proof upon completion.</li>
+                        <li>Supervisor approval triggers automatic reward points.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📊 Spatial BOQ System</h4>
+                    <p>Granular room-by-room quantity tracking for design projects.</p>
+                    <ul>
+                        <li>Categorizes items from lighting to custom joinery.</li>
+                        <li>Monitors approved budgets against pending costs.</li>
+                        <li>Feeds planned quantities directly into the logistics module.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">CORE MODULES 2/2</div>
+            <h2 class="massive">Capital & <span class="accent">Materials</span></h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>💰 Adaptive Financial Suite</h4>
+                    <p>A billing architecture that molds to your specific business model:</p>
+                    <ul>
+                        <li><strong>Design Focus:</strong> Tracks milestone billing tied directly to deliverables.</li>
+                        <li><strong>Hybrid Operations:</strong> Collects client fees while managing outgoing supplier bills.</li>
+                        <li><strong>Heavy Construction:</strong> Generates Running Account bills based on exact completion percentages.</li>
+                        <li><strong>Contractor Hub:</strong> Allows trades to submit bills and monitor payment statuses.</li>
+                        <li>Automated generation of locally compliant, branded tax invoices.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🧱 Logistics & Workforce Tracking</h4>
+                    <p>Ensuring complete accountability for every brick and every worker.</p>
+                    <ul>
+                        <li><strong>Triple-Point Logging:</strong> Captures morning stock, midday deliveries, and evening closing inventory.</li>
+                        <li><strong>Predictive Runouts:</strong> Issues alerts when materials dip below a 4-day threshold, drafting purchase orders.</li>
+                        <li><strong>Workforce Logs:</strong> Daily attendance capture broken down by skill category and gender.</li>
+                        <li>Transforms daily wage calculations instantly into contractor billing.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">THE BRAIN</div>
+            <h2 class="massive">Central <span class="accent">Intelligence</span></h2>
+            <p>All modules feed into a central hub, allowing you to query operations in plain English.</p>
+
+            <div class="card" style="margin-bottom: 1.5rem;">
+                <h4 class="accent">Sample Interaction</h4>
+                <p><strong>You:</strong> "Which active sites are currently facing risks?"</p>
+                <p><strong>AI:</strong> "Scanning 4 active sites...<br>
+                ECR Residence - HIGH RISK. Three tasks are overdue. A collection of ₹1.2L is pending for 38 days.<br>
+                Royal Gardens - MEDIUM RISK. Workforce costs are exceeding the foundation budget by 18%."</p>
+                <p><strong>You:</strong> "Address the overdue situation at ECR."</p>
+                <p><strong>AI:</strong> "I have prepared a firm collection reminder and drafted an escalation message for the client. Both are ready for your review."</p>
+            </div>
+            
+            <p><em>Safety Protocol: The intelligence layer never executes actions autonomously. All drafted communications require explicit human verification before sending.</em></p>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">AGENTIC AI</div>
+            <h2 class="massive"><span class="accent">Five Background</span> Agents</h2>
+            <p>Intelligent routines that work continuously to predict, act, and report.</p>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <h4>📅 Monday Briefing Agent</h4>
+                    <p>Activates at the start of the week to identify operational risks, draft payment reminders, and compile a narrative brief.</p>
+                </div>
+                <div class="card">
+                    <h4>💰 Receivables Agent</h4>
+                    <p>Daily monitoring of unpaid milestones. Adjusts communication tone dynamically based on how late the payment is.</p>
+                </div>
+                <div class="card">
+                    <h4>🚨 Operations Watchdog</h4>
+                    <p>Continuously scans operations silently. Only interrupts with notifications when critical thresholds are breached.</p>
+                </div>
+                <div class="card">
+                    <h4>🛡️ Boundary Guard Agent</h4>
+                    <p>Compares new tasks against the original contract. Immediately flags extra work to prevent unbilled services.</p>
+                </div>
+                <div class="card">
+                    <h4>🚀 Kickoff Agent</h4>
+                    <p>Analyzes historical data to instantly pre-populate task sequences and team setups for newly created projects.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">FINANCIAL DEFENSE</div>
+            <h2 class="massive">Safeguarding <span class="accent">Margins</span></h2>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h4>🛡️ Creep Shield & Leakage Detection</h4>
+                    <p>Engineered to stop silent financial losses.</p>
+                    <ul>
+                        <li><strong>Strict Baseline:</strong> The contract scope locks 48 hours post-kickoff.</li>
+                        <li>Any subsequent task is automatically flagged as potential additional scope.</li>
+                        <li><strong>Leakage Alerts:</strong> Identifies extra site visits or design changes that lack corresponding payment milestones.</li>
+                        <li>The dashboard displays exact unbilled totals, allowing users to convert them into variation orders with a single click.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📈 Predictive Cash Flow</h4>
+                    <p>Provides deep financial visibility without requiring a dedicated CFO.</p>
+                    <ul>
+                        <li>Calculates projections utilizing upcoming milestones, historical client payment speeds, and scheduled supplier payments.</li>
+                        <li><strong>Gap Warnings:</strong> "A cash deficit is projected in 38 days—prioritize specific invoice collections."</li>
+                        <li><strong>Obligation Alerts:</strong> "Upcoming purchase orders require ₹2.1L next month—ensure capital availability."</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">MULTIPLAYER</div>
+            <h2 class="massive">11 Granular <span class="accent">Access Roles</span></h2>
+            <p>Information is strictly partitioned. Users only access data relevant to their specific function.</p>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <h4 class="accent">The Principal (Owner)</h4>
+                    <p>Unrestricted oversight. The main dashboard highlights total pipeline value, pending collections, and comprehensive cash forecasts.</p>
+                </div>
+                <div class="card">
+                    <h4 class="accent">The Financial Operator</h4>
+                    <p>Dedicated billing and P&L access. Processes transactions without access to design files or operational task assignments.</p>
+                </div>
+                <div class="card">
+                    <h4 class="accent">The Project Manager</h4>
+                    <p>Operational control limited to assigned sites. Reviews site progress but cannot access overarching firm profitability metrics.</p>
+                </div>
+                <div class="card">
+                    <h4 class="accent">The Design Lead</h4>
+                    <p>Controls design documentation and quality checks. Approves completed site tasks, which validates the work quality.</p>
+                </div>
+                <div class="card">
+                    <h4 class="accent">The Field Supervisor</h4>
+                    <p>Utilizes a strict mobile workflow: Morning stock checks, midday delivery logs, mandatory photo uploads, and evening closing reports.</p>
+                </div>
+                <div class="card">
+                    <h4 class="accent">The External Client</h4>
+                    <p>Accesses a curated portal to view approved progress photos, track phase timelines, and authorize design changes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content">
+            <div class="tagline-badge">MEASURING SUCCESS</div>
+            <h2 class="massive">Key Metrics & <span class="accent">Incentives</span></h2>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <h4>🎯 Operational Targets</h4>
+                    <ul>
+                        <li><strong>Estimation Accuracy:</strong> Maintain less than a 15% variance from actuals.</li>
+                        <li><strong>Schedule Adherence:</strong> Reduce project delays by 30% against the industry average.</li>
+                        <li><strong>Budget Control:</strong> Cut cost overruns by 20%.</li>
+                        <li><strong>Efficiency:</strong> Eliminate 80% of manual reporting efforts.</li>
+                        <li><strong>Liquidity:</strong> Accelerate the invoice collection cycle by 40%.</li>
+                        <li><strong>Communication:</strong> Shift 80%+ of work discussions off unmanaged chat apps.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🏆 Experience Point Gamification</h4>
+                    <p>Designed to motivate field engineers to deliver high-quality work promptly.</p>
+                    <ul>
+                        <li>Tasks carry specific point values based on their difficulty.</li>
+                        <li>Points are granted exclusively when a Design Lead verifies the photographic proof of completion.</li>
+                        <li>Late submissions receive reduced points. Rejected work yields zero points.</li>
+                        <li>Engineers accumulate points to rank up and redeem them for financial bonuses on payday.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="tagline-badge">THE ROADMAP</div>
+            <h2 class="massive">Future <span class="accent">Trajectory</span></h2>
+            
+            <div class="card" style="margin-bottom: 2rem;">
+                <ul style="font-size: 1.2rem; margin: 0; padding-left: 1.5rem;">
+                    <li><strong>Year 1:</strong> Establish the platform across 100 regional design practices.</li>
+                    <li><strong>Year 2:</strong> Scale to 1,000 entities spanning design, interiors, and civil execution.</li>
+                    <li><strong>Year 3:</strong> Expand footprint to 10,000 businesses across South Asia.</li>
+                    <li><strong>Year 5:</strong> Cultivate a global knowledge network for the built environment.</li>
+                </ul>
+            </div>
+            
+            <p style="font-size: 1.2rem;"><strong>Upcoming Capabilities:</strong> Implementing generative design tools that draft spatial requirements instantly, integrated local compliance automation, and macro-level urban planning intelligence.</p>
+            
+            <h3 style="text-align: center; color: var(--accent-color); margin-top: 2rem; border-bottom: none;">The ultimate goal is to become the universal operating standard for the construction industry.</h3>
+        </div>
+    </div>
+
+    <div class="nav-controls">
+        <button class="nav-btn" onclick="prevSlide()">←</button>
+        <span class="slide-counter" id="counter">1 / 12</span>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const counter = document.getElementById('counter');
+
+        function updateUI() {
+            slides.forEach((s, i) => {
+                if(i === currentSlide) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+            counter.innerText = `${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateUI();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateUI();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowRight') nextSlide();
+            if(e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Initialize
+        updateUI();
+    </script>
+</body>
+</html>
