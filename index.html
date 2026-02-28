@@ -3,556 +3,1551 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARCFLOW.IO - Comprehensive Pitch Deck</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <title>ARCFLOW.IO — Enterprise Pitch Deck v4.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0c0e;
-            --accent-color: #d8b056;
-            --text-main: #f0f0f0;
-            --text-muted: #8a8d93;
-            --card-bg: #151619;
-            --border-color: rgba(216, 176, 86, 0.2);
+            --bg: #07080a;
+            --gold: #c9a84c;
+            --gold-dim: rgba(201,168,76,0.15);
+            --gold-border: rgba(201,168,76,0.25);
+            --surface: #0f1114;
+            --surface2: #161a1f;
+            --text: #ecedef;
+            --muted: #6b7280;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warn: #f59e0b;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow: hidden; 
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
         }
 
+        /* ── SLIDE SYSTEM ── */
         .slide {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            inset: 0;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.4s ease;
             display: flex;
             flex-direction: column;
-            padding: 3rem 8vw;
-            box-sizing: border-box;
-            background-image: radial-gradient(circle at 80% 50%, rgba(216, 176, 86, 0.03) 0%, transparent 50%);
+            padding: 3.5rem 7vw 5rem;
+            overflow: hidden;
+            background: var(--bg);
         }
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; }
 
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 10;
-        }
-
-        .slide-content {
+        .scroll-area {
             flex: 1;
             overflow-y: auto;
-            padding-right: 1rem;
-            padding-bottom: 4rem; 
+            padding-right: 0.5rem;
+            padding-bottom: 2rem;
             scrollbar-width: thin;
-            scrollbar-color: var(--accent-color) var(--bg-color);
+            scrollbar-color: var(--gold-border) transparent;
+        }
+        .scroll-area::-webkit-scrollbar { width: 4px; }
+        .scroll-area::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 2px; }
+
+        /* ── DECORATIVE BG ── */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .slide-content::-webkit-scrollbar { width: 6px; }
-        .slide-content::-webkit-scrollbar-thumb { background-color: var(--accent-color); border-radius: 3px; }
-
-        .accent { color: var(--accent-color); }
-
-        .tagline-badge {
+        /* ── TYPOGRAPHY ── */
+        .label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--gold-border);
             display: inline-block;
-            color: var(--accent-color);
-            border: 1px solid var(--border-color);
-            padding: 0.4rem 1rem;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
+            padding: 0.3rem 0.9rem;
+            margin-bottom: 2rem;
         }
 
-        h1.title {
-            font-size: 7rem;
-            font-weight: 900;
-            line-height: 0.9;
-            margin: 0 0 1rem 0;
-            letter-spacing: -2px;
-        }
-
-        h2.massive {
-            font-size: 3.5rem;
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
             font-weight: 800;
+            line-height: 0.85;
+            letter-spacing: -3px;
+        }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 700;
             line-height: 1.1;
-            margin: 0 0 2rem 0;
-            text-transform: uppercase;
+            margin-bottom: 1.5rem;
         }
 
         h3 {
-            font-size: 1.8rem;
-            margin: 0 0 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            display: inline-block;
-        }
-
-        p {
+            font-family: 'Syne', sans-serif;
             font-size: 1rem;
-            line-height: 1.6;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.6rem;
+            color: var(--text);
         }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
-        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        p { font-size: 0.9rem; line-height: 1.7; color: var(--muted); }
+        .gold { color: var(--gold); }
+        .bright { color: var(--text); }
 
+        /* ── GRID LAYOUTS ── */
+        .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.5rem; }
+        .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .g5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+
+        /* ── CARDS ── */
         .card {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 6px;
-            border-top: 2px solid transparent;
-            transition: border-color 0.3s;
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1.4rem;
+            transition: border-color 0.2s;
         }
+        .card:hover { border-color: var(--gold-border); }
+        .card.gold-top { border-top: 2px solid var(--gold); }
+        .card.accent-left { border-left: 3px solid var(--gold); }
 
-        .card:hover { border-top: 2px solid var(--accent-color); }
-        .card h4 { font-size: 1.1rem; margin: 0 0 0.8rem 0; color: var(--text-main); }
-        .card p { font-size: 0.9rem; margin: 0; }
-
-        ul { color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
-        li { margin-bottom: 0.5rem; }
-        li strong { color: var(--text-main); }
-
-        .footer-metrics {
-            margin-top: auto;
+        /* ── LISTS ── */
+        ul { list-style: none; padding: 0; }
+        ul li {
+            font-size: 0.875rem;
+            color: var(--muted);
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
             display: flex;
-            justify-content: space-between;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 2rem;
+            align-items: flex-start;
+            gap: 0.6rem;
+        }
+        ul li::before { content: '—'; color: var(--gold); flex-shrink: 0; font-size: 0.75rem; margin-top: 0.15rem; }
+        ul li:last-child { border-bottom: none; }
+        ul li strong { color: var(--text); }
+
+        /* ── SOP ENFORCEMENT ── */
+        .sop-gate {
+            background: var(--surface);
+            border: 1px solid var(--gold-border);
+            border-radius: 8px;
+            padding: 1.2rem 1.4rem;
+            margin-bottom: 1rem;
+        }
+        .sop-gate .sop-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .sop-badge {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: var(--gold);
+            color: #000;
+            padding: 0.2rem 0.6rem;
+            border-radius: 2px;
+            font-weight: 700;
+        }
+        .sop-badge.soft { background: var(--surface2); color: var(--gold); border: 1px solid var(--gold-border); }
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .flow-step {
+            background: var(--surface2);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 4px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.75rem;
+            color: var(--text);
+            white-space: nowrap;
+        }
+        .flow-step.blocked { border-color: var(--danger); color: var(--danger); }
+        .flow-step.pass { border-color: var(--success); color: var(--success); }
+        .flow-arrow { color: var(--muted); font-size: 0.75rem; }
+
+        /* ── AGENT CARDS ── */
+        .agent-card {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1.2rem;
+        }
+        .agent-icon { font-size: 1.5rem; margin-bottom: 0.6rem; display: block; }
+        .agent-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.4rem;
+        }
+        .agent-card p { font-size: 0.8rem; }
+        .agent-trigger {
+            font-size: 0.7rem;
+            color: var(--gold);
+            border: 1px solid var(--gold-border);
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            display: inline-block;
+            margin-top: 0.5rem;
         }
 
-        .metric-block span {
-            display: block;
+        /* ── ROLE CHIPS ── */
+        .role-group h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.6rem;
+        }
+        .role-chip {
+            display: inline-block;
+            background: var(--surface2);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 4px;
+            padding: 0.3rem 0.7rem;
             font-size: 0.75rem;
-            color: var(--text-muted);
+            margin: 0.2rem;
+            color: var(--text);
+        }
+        .role-chip.gold { background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold); }
+
+        /* ── STAT BLOCKS ── */
+        .stat-row {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        .stat { text-align: center; }
+        .stat .num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat .unit { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+
+        /* ── TERMINAL / CODE BLOCK ── */
+        .terminal {
+            background: #0a0c0e;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px;
+            padding: 1.2rem 1.4rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            margin: 1rem 0;
+        }
+        .terminal .prompt { color: var(--gold); }
+        .terminal .response { color: #86efac; }
+        .terminal .dim { color: var(--muted); }
+        .terminal .danger { color: #fca5a5; }
+        .terminal .warn { color: #fde68a; }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            margin: 1.5rem 0;
+        }
+
+        /* ── ROADMAP TIMELINE ── */
+        .timeline { display: flex; gap: 0; margin: 1.5rem 0; }
+        .timeline-item {
+            flex: 1;
+            padding: 1rem;
+            border-top: 2px solid rgba(255,255,255,0.08);
+            position: relative;
+        }
+        .timeline-item.done { border-top-color: var(--success); }
+        .timeline-item.active { border-top-color: var(--gold); }
+        .timeline-item.upcoming { border-top-color: rgba(255,255,255,0.12); }
+        .timeline-item .tl-label {
+            font-size: 0.65rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 0.3rem;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+        .timeline-item .tl-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
         }
 
-        .metric-block strong { font-size: 1rem; color: var(--accent-color); }
-
-        .nav-controls {
+        /* ── NAV ── */
+        .nav {
             position: fixed;
             bottom: 1.5rem;
             right: 2rem;
             z-index: 100;
             display: flex;
-            gap: 1rem;
             align-items: center;
-            background: var(--bg-color);
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
+            gap: 1rem;
+            background: rgba(15,17,20,0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--gold-border);
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
         }
-
         .nav-btn {
-            background: transparent;
+            background: none;
             border: none;
-            color: var(--accent-color);
-            font-size: 1.5rem;
+            color: var(--gold);
+            font-size: 1.2rem;
             cursor: pointer;
-            padding: 0 0.5rem;
+            padding: 0 0.3rem;
+            transition: opacity 0.2s;
+        }
+        .nav-btn:hover { opacity: 0.7; }
+        .nav-counter {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
+            min-width: 3rem;
+            text-align: center;
         }
 
-        .slide-counter { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+        /* ── FOOTER ── */
+        .footer-strip {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 1.5rem;
+            margin-top: auto;
+        }
+        .footer-strip .item span {
+            display: block;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.2rem;
+        }
+        .footer-strip .item strong { font-size: 0.85rem; color: var(--gold); }
+
+        /* ── TAGS ── */
+        .tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+        .tag.new { background: rgba(201,168,76,0.2); color: var(--gold); border: 1px solid var(--gold-border); }
+        .tag.built { background: rgba(34,197,94,0.1); color: var(--success); border: 1px solid rgba(34,197,94,0.2); }
+        .tag.live { background: rgba(34,197,94,0.1); color: #22c55e; border: 1px solid rgba(34,197,94,0.2); }
+        .tag.phase { background: rgba(201,168,76,0.15); color: #c9a84c; border: 1px solid rgba(201,168,76,0.25); }
+        .tag.future { background: rgba(107,114,128,0.15); color: #6b7280; border: 1px solid rgba(107,114,128,0.2); }
+
+        /* ── COMPARISON ROW ── */
+        .compare-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .compare-col h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+        .compare-col.bad h4 { color: var(--danger); }
+        .compare-col.good h4 { color: var(--success); }
+
+        /* ── METRIC CARD ── */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        .metric-card .big {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .metric-card .lbl {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 0.4rem;
+        }
     </style>
 </head>
 <body>
 
-    <div class="slide active">
-        <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center;">
-            <div class="tagline-badge">— INVESTOR PRESENTATION · VERSION 3.0</div>
-            <h1 class="title">ARC<span class="accent">FLOW</span><br>.IO</h1>
-            <p style="font-size: 1.5rem; max-width: 700px; color: var(--text-main);">
-                The unified digital platform empowering the built environment.<br>
-                <span class="accent">From initial concept to final handover — seamlessly connected.</span>
-            </p>
-            
-            <div class="footer-metrics" style="margin-top: 4rem;">
-                <div class="metric-block"><span>Developed By</span><strong>D2V Architectural Consultancy</strong></div>
-                <div class="metric-block"><span>Founder</span><strong>Suganth</strong></div>
-                <div class="metric-block"><span>Location</span><strong>Chennai, India</strong></div>
-                <div class="metric-block"><span>Status</span><strong>Master Release</strong></div>
+<div class="slide active">
+    <div class="scroll-area" style="display:flex;flex-direction:column;justify-content:center;height:100%">
+        <div class="label">— Investor Presentation · Version 4.0</div>
+        <h1>ARC<span class="gold">FLOW</span><br>.IO</h1>
+        <p style="font-size:1.3rem;color:var(--text);max-width:600px;margin-top:1.5rem;line-height:1.5">
+            The enterprise AI operating system for architecture,<br>
+            construction, and interior firms.<br>
+            <span class="gold">From concept to completion — one system.</span>
+        </p>
+        <div class="footer-strip" style="margin-top:5rem">
+            <div class="item"><span>Developed By</span><strong>D2V Architectural Consultancy</strong></div>
+            <div class="item"><span>Founder</span><strong>Suganth</strong></div>
+            <div class="item"><span>Location</span><strong>Chennai, India</strong></div>
+            <div class="item"><span>Build Status</span><strong>Phase 2 Complete</strong></div>
+            <div class="item"><span>API Routes Live</span><strong>89 Routes</strong></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">The North Star</div>
+        <h2>Every morning, the system answers<br><span class="gold">3 questions automatically.</span></h2>
+        <div class="g3" style="margin-top:2rem">
+            <div class="card accent-left">
+                <h3 style="font-size:1.2rem">What needs my<br>attention today?</h3>
+                <p style="margin-top:0.5rem">Overdue tasks, pending collections, unresolved decisions — surfaced before the day begins.</p>
+            </div>
+            <div class="card accent-left">
+                <h3 style="font-size:1.2rem">Where is each project<br>in its lifecycle?</h3>
+                <p style="margin-top:0.5rem">Phase completion, next milestone, team workload — all visible in one view.</p>
+            </div>
+            <div class="card accent-left">
+                <h3 style="font-size:1.2rem">Is the business<br>financially healthy?</h3>
+                <p style="margin-top:0.5rem">Pipeline value, collections due, 90-day cash forecast — answered without touching Excel.</p>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="g3">
+            <div class="card">
+                <h3>TRUTH BACKBONE</h3>
+                <p>PostgreSQL, ACID-compliant, Row Level Security. Legal-grade audit trail on every decision, payment, and material movement.</p>
+            </div>
+            <div class="card">
+                <h3>AI WORKFORCE</h3>
+                <p>6 autonomous agents handle weekly briefs, collections, risk scanning, scope protection, procurement, and onboarding.</p>
+            </div>
+            <div class="card">
+                <h3>PLATFORM MEMORY</h3>
+                <p>Every completed project teaches the system — vendor reliability, delay causes, cost patterns — stored forever.</p>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">THE NORTH STAR</div>
-            <h2 class="massive">Every morning, the system answers <span class="accent">3 key questions</span> automatically.</h2>
-            
-            <div class="grid-3" style="margin-top: 3rem;">
-                <div class="card" style="border-left: 3px solid var(--accent-color);">
-                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">1. What requires my attention today?</h4>
-                </div>
-                <div class="card" style="border-left: 3px solid var(--accent-color);">
-                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">2. Where is each project in its lifecycle?</h4>
-                </div>
-                <div class="card" style="border-left: 3px solid var(--accent-color);">
-                    <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">3. Is the business financially healthy?</h4>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 2rem;">Core Design Philosophy</h3>
-            <div class="grid-3">
-                <div class="card">
-                    <h4>TRUTH BACKBONE</h4>
-                    <p>Legal-grade data trails ensuring zero compromises on operational integrity.</p>
-                </div>
-                <div class="card">
-                    <h4>AI WORKFORCE</h4>
-                    <p>Intelligent agents automate tracking and reporting, keeping humans in control.</p>
-                </div>
-                <div class="card">
-                    <h4>PLATFORM MEMORY</h4>
-                    <p>Continuously learns from historical vendor patterns, costs, and delay triggers.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">THE PROBLEM</div>
-            <h2 class="massive">The industry faces <span class="accent">identical</span> bottlenecks.</h2>
-            
-            <div class="grid-2">
-                <div class="card">
-                    <h4 class="accent">Current Landscape</h4>
-                    <ul>
-                        <li>Relying on messaging apps leads to scattered communication.</li>
-                        <li>Verbal agreements result in undocumented decisions and disputes.</li>
-                        <li>Fabricated progress reports hide the actual site realities.</li>
-                        <li>Founders lack clear visibility into outstanding collections.</li>
-                        <li>Unbilled extra work causes massive profit leakage.</li>
-                    </ul>
-                </div>
-                <div class="card" style="background-color: rgba(216, 176, 86, 0.05);">
-                    <h4 class="accent">The Arcflow Solution</h4>
-                    <ul>
-                        <li>A centralized hub connecting the firm, clients, and suppliers.</li>
-                        <li>All decisions are formally logged, timestamped, and approved.</li>
-                        <li>Mandatory photo verification ensures accurate daily logs.</li>
-                        <li>Live financial dashboards feature predictive 90-day tracking.</li>
-                        <li>Automated shields detect and capture scope creep instantly.</li>
-                    </ul>
-                </div>
-            </div>
-            <p style="text-align: center; font-size: 1.2rem; margin-top: 1rem;"><strong>Firms keep repeating the same errors. We eliminate them entirely.</strong></p>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">MARKET & ADAPTABILITY</div>
-            <h2 class="massive">The platform <span class="accent">shapes itself</span> to the firm.</h2>
-            <p>Based on onboarding selections, the UI dynamically adjusts visible modules, financial tracking modes, and permission settings.</p>
-            
-            <div class="grid-4">
-                <div class="card">
-                    <h4>Architecture / Design</h4>
-                    <p><strong>Revenue Model:</strong> Professional fee milestones.<br><strong>Pain Point:</strong> Uncompensated design revisions.<br><strong>Key Modules:</strong> BOQ, Spaces, Approvals, Files.</p>
-                </div>
-                <div class="card">
-                    <h4>Interior Execution</h4>
-                    <p><strong>Revenue Model:</strong> Client fees plus execution margins.<br><strong>Pain Point:</strong> Material delivery logistics.<br><strong>Key Modules:</strong> Inventory, Suppliers, Site Tracking.</p>
-                </div>
-                <div class="card">
-                    <h4>Construction / Civil</h4>
-                    <p><strong>Revenue Model:</strong> Running Account billing.<br><strong>Pain Point:</strong> Resource theft and schedule delays.<br><strong>Key Modules:</strong> Labour, Quality Verification, RA Billing.</p>
-                </div>
-                <div class="card">
-                    <h4>Trades & Contractors</h4>
-                    <p><strong>Revenue Model:</strong> Main contractor work orders.<br><strong>Pain Point:</strong> Lack of payment transparency.<br><strong>Key Modules:</strong> Submitted Bills, Work Orders, Materials.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">CORE MODULES 1/2</div>
-            <h2 class="massive">The <span class="accent">Operational</span> Hub</h2>
-            
-            <div class="grid-3">
-                <div class="card">
-                    <h4>📋 RFI & Decision Tracking</h4>
-                    <p>The legal ledger capturing every client approval and site instruction.</p>
-                    <ul>
-                        <li>Links cost impacts directly to client sign-offs.</li>
-                        <li>Transforms pasted messaging chats into formal logs.</li>
-                        <li>Approved changes automatically draft payment milestones.</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h4>✅ Advanced Task Engine</h4>
-                    <p>Structured workflows replacing chaotic chat group coordination.</p>
-                    <ul>
-                        <li>Smart blocking prevents tasks if dependencies are missing.</li>
-                        <li>Requires mandatory photographic proof upon completion.</li>
-                        <li>Supervisor approval triggers automatic reward points.</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h4>📊 Spatial BOQ System</h4>
-                    <p>Granular room-by-room quantity tracking for design projects.</p>
-                    <ul>
-                        <li>Categorizes items from lighting to custom joinery.</li>
-                        <li>Monitors approved budgets against pending costs.</li>
-                        <li>Feeds planned quantities directly into the logistics module.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">CORE MODULES 2/2</div>
-            <h2 class="massive">Capital & <span class="accent">Materials</span></h2>
-
-            <div class="grid-2">
-                <div class="card">
-                    <h4>💰 Adaptive Financial Suite</h4>
-                    <p>A billing architecture that molds to your specific business model:</p>
-                    <ul>
-                        <li><strong>Design Focus:</strong> Tracks milestone billing tied directly to deliverables.</li>
-                        <li><strong>Hybrid Operations:</strong> Collects client fees while managing outgoing supplier bills.</li>
-                        <li><strong>Heavy Construction:</strong> Generates Running Account bills based on exact completion percentages.</li>
-                        <li><strong>Contractor Hub:</strong> Allows trades to submit bills and monitor payment statuses.</li>
-                        <li>Automated generation of locally compliant, branded tax invoices.</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h4>🧱 Logistics & Workforce Tracking</h4>
-                    <p>Ensuring complete accountability for every brick and every worker.</p>
-                    <ul>
-                        <li><strong>Triple-Point Logging:</strong> Captures morning stock, midday deliveries, and evening closing inventory.</li>
-                        <li><strong>Predictive Runouts:</strong> Issues alerts when materials dip below a 4-day threshold, drafting purchase orders.</li>
-                        <li><strong>Workforce Logs:</strong> Daily attendance capture broken down by skill category and gender.</li>
-                        <li>Transforms daily wage calculations instantly into contractor billing.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">THE BRAIN</div>
-            <h2 class="massive">Central <span class="accent">Intelligence</span></h2>
-            <p>All modules feed into a central hub, allowing you to query operations in plain English.</p>
-
-            <div class="card" style="margin-bottom: 1.5rem;">
-                <h4 class="accent">Sample Interaction</h4>
-                <p><strong>You:</strong> "Which active sites are currently facing risks?"</p>
-                <p><strong>AI:</strong> "Scanning 4 active sites...<br>
-                ECR Residence - HIGH RISK. Three tasks are overdue. A collection of ₹1.2L is pending for 38 days.<br>
-                Royal Gardens - MEDIUM RISK. Workforce costs are exceeding the foundation budget by 18%."</p>
-                <p><strong>You:</strong> "Address the overdue situation at ECR."</p>
-                <p><strong>AI:</strong> "I have prepared a firm collection reminder and drafted an escalation message for the client. Both are ready for your review."</p>
-            </div>
-            
-            <p><em>Safety Protocol: The intelligence layer never executes actions autonomously. All drafted communications require explicit human verification before sending.</em></p>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">AGENTIC AI</div>
-            <h2 class="massive"><span class="accent">Five Background</span> Agents</h2>
-            <p>Intelligent routines that work continuously to predict, act, and report.</p>
-            
-            <div class="grid-3">
-                <div class="card">
-                    <h4>📅 Monday Briefing Agent</h4>
-                    <p>Activates at the start of the week to identify operational risks, draft payment reminders, and compile a narrative brief.</p>
-                </div>
-                <div class="card">
-                    <h4>💰 Receivables Agent</h4>
-                    <p>Daily monitoring of unpaid milestones. Adjusts communication tone dynamically based on how late the payment is.</p>
-                </div>
-                <div class="card">
-                    <h4>🚨 Operations Watchdog</h4>
-                    <p>Continuously scans operations silently. Only interrupts with notifications when critical thresholds are breached.</p>
-                </div>
-                <div class="card">
-                    <h4>🛡️ Boundary Guard Agent</h4>
-                    <p>Compares new tasks against the original contract. Immediately flags extra work to prevent unbilled services.</p>
-                </div>
-                <div class="card">
-                    <h4>🚀 Kickoff Agent</h4>
-                    <p>Analyzes historical data to instantly pre-populate task sequences and team setups for newly created projects.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">FINANCIAL DEFENSE</div>
-            <h2 class="massive">Safeguarding <span class="accent">Margins</span></h2>
-            
-            <div class="grid-2">
-                <div class="card">
-                    <h4>🛡️ Creep Shield & Leakage Detection</h4>
-                    <p>Engineered to stop silent financial losses.</p>
-                    <ul>
-                        <li><strong>Strict Baseline:</strong> The contract scope locks 48 hours post-kickoff.</li>
-                        <li>Any subsequent task is automatically flagged as potential additional scope.</li>
-                        <li><strong>Leakage Alerts:</strong> Identifies extra site visits or design changes that lack corresponding payment milestones.</li>
-                        <li>The dashboard displays exact unbilled totals, allowing users to convert them into variation orders with a single click.</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h4>📈 Predictive Cash Flow</h4>
-                    <p>Provides deep financial visibility without requiring a dedicated CFO.</p>
-                    <ul>
-                        <li>Calculates projections utilizing upcoming milestones, historical client payment speeds, and scheduled supplier payments.</li>
-                        <li><strong>Gap Warnings:</strong> "A cash deficit is projected in 38 days—prioritize specific invoice collections."</li>
-                        <li><strong>Obligation Alerts:</strong> "Upcoming purchase orders require ₹2.1L next month—ensure capital availability."</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">MULTIPLAYER</div>
-            <h2 class="massive">11 Granular <span class="accent">Access Roles</span></h2>
-            <p>Information is strictly partitioned. Users only access data relevant to their specific function.</p>
-            
-            <div class="grid-3">
-                <div class="card">
-                    <h4 class="accent">The Principal (Owner)</h4>
-                    <p>Unrestricted oversight. The main dashboard highlights total pipeline value, pending collections, and comprehensive cash forecasts.</p>
-                </div>
-                <div class="card">
-                    <h4 class="accent">The Financial Operator</h4>
-                    <p>Dedicated billing and P&L access. Processes transactions without access to design files or operational task assignments.</p>
-                </div>
-                <div class="card">
-                    <h4 class="accent">The Project Manager</h4>
-                    <p>Operational control limited to assigned sites. Reviews site progress but cannot access overarching firm profitability metrics.</p>
-                </div>
-                <div class="card">
-                    <h4 class="accent">The Design Lead</h4>
-                    <p>Controls design documentation and quality checks. Approves completed site tasks, which validates the work quality.</p>
-                </div>
-                <div class="card">
-                    <h4 class="accent">The Field Supervisor</h4>
-                    <p>Utilizes a strict mobile workflow: Morning stock checks, midday delivery logs, mandatory photo uploads, and evening closing reports.</p>
-                </div>
-                <div class="card">
-                    <h4 class="accent">The External Client</h4>
-                    <p>Accesses a curated portal to view approved progress photos, track phase timelines, and authorize design changes.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content">
-            <div class="tagline-badge">MEASURING SUCCESS</div>
-            <h2 class="massive">Key Metrics & <span class="accent">Incentives</span></h2>
-            
-            <div class="grid-2">
-                <div class="card">
-                    <h4>🎯 Operational Targets</h4>
-                    <ul>
-                        <li><strong>Estimation Accuracy:</strong> Maintain less than a 15% variance from actuals.</li>
-                        <li><strong>Schedule Adherence:</strong> Reduce project delays by 30% against the industry average.</li>
-                        <li><strong>Budget Control:</strong> Cut cost overruns by 20%.</li>
-                        <li><strong>Efficiency:</strong> Eliminate 80% of manual reporting efforts.</li>
-                        <li><strong>Liquidity:</strong> Accelerate the invoice collection cycle by 40%.</li>
-                        <li><strong>Communication:</strong> Shift 80%+ of work discussions off unmanaged chat apps.</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h4>🏆 Experience Point Gamification</h4>
-                    <p>Designed to motivate field engineers to deliver high-quality work promptly.</p>
-                    <ul>
-                        <li>Tasks carry specific point values based on their difficulty.</li>
-                        <li>Points are granted exclusively when a Design Lead verifies the photographic proof of completion.</li>
-                        <li>Late submissions receive reduced points. Rejected work yields zero points.</li>
-                        <li>Engineers accumulate points to rank up and redeem them for financial bonuses on payday.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <div class="slide-content" style="display: flex; flex-direction: column; justify-content: center;">
-            <div class="tagline-badge">THE ROADMAP</div>
-            <h2 class="massive">Future <span class="accent">Trajectory</span></h2>
-            
-            <div class="card" style="margin-bottom: 2rem;">
-                <ul style="font-size: 1.2rem; margin: 0; padding-left: 1.5rem;">
-                    <li><strong>Year 1:</strong> Establish the platform across 100 regional design practices.</li>
-                    <li><strong>Year 2:</strong> Scale to 1,000 entities spanning design, interiors, and civil execution.</li>
-                    <li><strong>Year 3:</strong> Expand footprint to 10,000 businesses across South Asia.</li>
-                    <li><strong>Year 5:</strong> Cultivate a global knowledge network for the built environment.</li>
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">The Problem</div>
+        <h2>Every firm repeats<br><span class="gold">the same expensive mistakes.</span></h2>
+        <div class="compare-row" style="margin-top:2rem">
+            <div class="card compare-col bad">
+                <h4>❌ Current Reality</h4>
+                <ul>
+                    <li><strong>5 WhatsApp groups per project</strong> — decisions disappear in chat history</li>
+                    <li><strong>Verbal client approvals</strong> — no trail, disputes guaranteed</li>
+                    <li><strong>Fabricated DPRs</strong> — site reality hidden from office</li>
+                    <li><strong>Unbilled extra work</strong> — 10–20% revenue lost silently</li>
+                    <li><strong>Zero cash visibility</strong> — cash gap discovered when it's too late</li>
+                    <li><strong>Subcontractor overbilling</strong> — claimed 40%, delivered 28%</li>
+                    <li><strong>Wrong drawing on site</strong> — built from superseded version</li>
+                    <li><strong>Manual weekly reports</strong> — 4+ hours every Friday</li>
                 </ul>
             </div>
-            
-            <p style="font-size: 1.2rem;"><strong>Upcoming Capabilities:</strong> Implementing generative design tools that draft spatial requirements instantly, integrated local compliance automation, and macro-level urban planning intelligence.</p>
-            
-            <h3 style="text-align: center; color: var(--accent-color); margin-top: 2rem; border-bottom: none;">The ultimate goal is to become the universal operating standard for the construction industry.</h3>
+            <div class="card compare-col good" style="background:rgba(34,197,94,0.03)">
+                <h4>✅ The Arcflow Fix</h4>
+                <ul>
+                    <li><strong>Centralized decision log</strong> — every approval timestamped, client-signed</li>
+                    <li><strong>Photo-verified task completion</strong> — mandatory, cannot be bypassed</li>
+                    <li><strong>Scope Creep Shield</strong> — every unbilled addition flagged instantly</li>
+                    <li><strong>90-day cash forecast</strong> — gap predicted 38 days in advance</li>
+                    <li><strong>QS bill verification gate</strong> — claimed % vs photo evidence compared</li>
+                    <li><strong>GFC Lock on drawings</strong> — site only sees architect-stamped versions</li>
+                    <li><strong>Automated reports</strong> — AI drafts MOM, DPR, board reports daily</li>
+                    <li><strong>Omni-channel input</strong> — voice, screenshot, email, direct — all logged</li>
+                </ul>
+            </div>
+        </div>
+        <p style="text-align:center;font-size:1rem;color:var(--text);margin-top:1rem">Every mistake above costs real money. Arcflow eliminates each one systematically.</p>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Market & Adaptability</div>
+        <h2>The platform <span class="gold">configures itself</span><br>to the firm's exact work.</h2>
+        <p style="margin-bottom:2rem">Two onboarding dimensions — Sectors + Services — unlock the exact modules, finance modes, and roles each firm needs. No firm sees features they don't use.</p>
+        <div class="g4">
+            <div class="card gold-top">
+                <h3>Architecture / Design</h3>
+                <p style="font-size:0.8rem;margin:0.5rem 0"><span class="gold">Revenue:</span> Professional fee milestones</p>
+                <p style="font-size:0.8rem;margin-bottom:0.5rem"><span class="gold">Pain:</span> Uncompensated revisions, undocumented client decisions</p>
+                <p style="font-size:0.75rem;color:var(--muted)">BOQ · Rooms · Decisions · Files · GFC Lock</p>
+            </div>
+            <div class="card gold-top">
+                <h3>Interior Execution</h3>
+                <p style="font-size:0.8rem;margin:0.5rem 0"><span class="gold">Revenue:</span> Fee + execution margin (dual)</p>
+                <p style="font-size:0.8rem;margin-bottom:0.5rem"><span class="gold">Pain:</span> Vendor coordination, delivery timing, scope drift</p>
+                <p style="font-size:0.75rem;color:var(--muted)">Inventory · Vendors · Site Logs · Quality</p>
+            </div>
+            <div class="card gold-top">
+                <h3>Construction / Civil</h3>
+                <p style="font-size:0.8rem;margin:0.5rem 0"><span class="gold">Revenue:</span> RA billing, retention-based</p>
+                <p style="font-size:0.8rem;margin-bottom:0.5rem"><span class="gold">Pain:</span> Material theft, labour tracking, subcontractor disputes</p>
+                <p style="font-size:0.75rem;color:var(--muted)">Labour · RA Billing · QA/QC · Equipment</p>
+            </div>
+            <div class="card gold-top">
+                <h3>Contractor / Trades</h3>
+                <p style="font-size:0.8rem;margin:0.5rem 0"><span class="gold">Revenue:</span> Work orders from main contractor</p>
+                <p style="font-size:0.8rem;margin-bottom:0.5rem"><span class="gold">Pain:</span> Zero payment transparency, no documentation</p>
+                <p style="font-size:0.75rem;color:var(--muted)">Work Orders · Bills · Materials · Tasks</p>
+            </div>
+        </div>
+        <div class="card" style="background:var(--gold-dim);border-color:var(--gold-border)">
+            <p style="color:var(--text);font-size:0.9rem">
+                <strong class="gold">Market Size:</strong> Global Construction Management Software — $11.6B–$12.6B, growing at 9%+ CAGR. 
+                India alone has 100,000+ architecture and construction firms operating entirely on WhatsApp and Excel today.
+            </p>
         </div>
     </div>
+</div>
 
-    <div class="nav-controls">
-        <button class="nav-btn" onclick="prevSlide()">←</button>
-        <span class="slide-counter" id="counter">1 / 12</span>
-        <button class="nav-btn" onclick="nextSlide()">→</button>
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">System-Enforced SOPs <span class="tag new">New</span></div>
+        <h2>Arcflow doesn't <span class="gold">suggest</span> best practice.<br>It <span class="gold">enforces</span> it.</h2>
+        <p style="margin-bottom:1.5rem">Standard Operating Procedures are built into the system as hard gates. The UI blocks the next action until the required step is completed. No workarounds.</p>
+
+        <div class="sop-gate">
+            <div class="sop-header">
+                <span class="sop-badge">Hard Gate</span>
+                <h3 style="margin:0;font-size:0.9rem">SOP 1 — Site Engineer Morning Checklist</h3>
+            </div>
+            <p style="font-size:0.8rem;margin-bottom:0.6rem">Task list is locked until morning checklist is complete. No checklist = no tasks visible.</p>
+            <div class="flow-row">
+                <span class="flow-step blocked">📱 App Opens</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step blocked">Log Opening Stock</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step blocked">Log Labour Count</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step pass">Tasks Unlocked</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step">Execute Day</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step blocked">Evening: Closing Stock + Photo</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step pass">Day Closed</span>
+            </div>
+        </div>
+
+        <div class="sop-gate">
+            <div class="sop-header">
+                <span class="sop-badge">Hard Gate</span>
+                <h3 style="margin:0;font-size:0.9rem">SOP 2 — Task Completion Photo Required</h3>
+            </div>
+            <p style="font-size:0.8rem;margin-bottom:0.6rem">Site engineer cannot mark a task "Done" without uploading photographic proof. API rejects the request.</p>
+            <div class="flow-row">
+                <span class="flow-step">Task Executed</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step blocked">Mark Done (requires photo)</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step">Photo Uploaded</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step pass">Status: Pending Approval</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step">Architect Reviews</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step pass">XP Awarded</span>
+            </div>
+        </div>
+
+        <div class="sop-gate">
+            <div class="sop-header">
+                <span class="sop-badge soft">Soft Gate</span>
+                <h3 style="margin:0;font-size:0.9rem">SOP 3 — Scope Addition Requires Variation RFI</h3>
+            </div>
+            <p style="font-size:0.8rem;margin-bottom:0.6rem">After 48h post-kickoff, new tasks trigger a scope check. PM must link to approved variation or it's flagged as fee leakage.</p>
+            <div class="flow-row">
+                <span class="flow-step">PM Creates Task</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step blocked">Scope Locked? Check</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step blocked">Variation RFI Required</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step">Client Approves</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step pass">Finance Milestone Auto-Created</span>
+            </div>
+        </div>
+
+        <div class="sop-gate">
+            <div class="sop-header">
+                <span class="sop-badge">Hard Gate</span>
+                <h3 style="margin:0;font-size:0.9rem">SOP 4 — QS Bill Verification Gate</h3>
+            </div>
+            <p style="font-size:0.8rem;margin-bottom:0.6rem">Subcontractor claims 40% completion. System pulls actual task logs — shows 28%. QS must resolve before payment proceeds.</p>
+            <div class="flow-row">
+                <span class="flow-step">Subcontractor Submits Bill</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step">System: Claimed vs Actual</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step blocked">Variance Flagged</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step">QS Resolves</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-step pass">Accountant Pays</span>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const counter = document.getElementById('counter');
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Core Modules 1/4</div>
+        <h2>The <span class="gold">Operational</span> Hub</h2>
+        <div class="g3">
+            <div class="card">
+                <h3>📋 Decisions (RFI) Engine <span class="tag built">Built</span></h3>
+                <p>The legal backbone for every client approval, variation, material selection, and safety incident.</p>
+                <ul style="margin-top:0.8rem">
+                    <li>7 decision types: Design · Variation · Material · Site Issue · Approval · Instruction · <strong>Safety Incident</strong></li>
+                    <li>Blocks dependent tasks until resolved</li>
+                    <li>Approved variation <strong>auto-creates</strong> payment milestone</li>
+                    <li>WhatsApp paste → AI extracts → formal log in seconds</li>
+                    <li>Client receives push notification to digitally approve</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>✅ Tasks Engine <span class="tag built">Built</span></h3>
+                <p>Structured, dependency-aware workflows replacing WhatsApp coordination entirely.</p>
+                <ul style="margin-top:0.8rem">
+                    <li>5-status flow: Todo → In Progress → <strong>Pending QC</strong> → Pending Approval → Done</li>
+                    <li>Smart blocking: dependencies enforced at API level</li>
+                    <li>Mandatory photo before "Done" — API rejects without it</li>
+                    <li>Architect approval triggers XP award to field engineer</li>
+                    <li>QA/QC gate available for civil/MEP critical tasks</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>📊 BOQ + Rooms Engine <span class="tag built">Built</span></h3>
+                <p>Room-by-room quantity tracking with a financial lock that protects margins.</p>
+                <ul style="margin-top:0.8rem">
+                    <li>11 item categories from lighting to custom joinery</li>
+                    <li>Approved vs pending cost tracking</li>
+                    <li><strong>BOQ Baseline Lock:</strong> QS locks baseline — additions require formal variation</li>
+                    <li>Feeds planned quantities to procurement automatically</li>
+                    <li>Client-facing PDF export with firm branding</li>
+                </ul>
+            </div>
+        </div>
+        <div class="g2">
+            <div class="card">
+                <h3>🗂️ File Vault + GFC Lock <span class="tag new">New</span></h3>
+                <p>Versioned drawing storage with a critical safety gate: <strong>Good For Construction (GFC) Lock</strong>. Site engineers on mobile cannot see drawings until Architect stamps them GFC. Mandatory acknowledgment required before continuing site tasks. Zero "built from old drawing" mistakes.</p>
+            </div>
+            <div class="card">
+                <h3>📅 Schedule / Timeline</h3>
+                <p>Horizontal phase timeline view with milestone markers. Phase completion percentage computed from task data. Overdue phases highlighted. Calendar view for daily task management. Payment milestone triggers linked to phase completion.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-        function updateUI() {
-            slides.forEach((s, i) => {
-                if(i === currentSlide) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-            counter.innerText = `${currentSlide + 1} / ${slides.length}`;
-        }
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Core Modules 2/4</div>
+        <h2>The <span class="gold">Finance</span> Engine</h2>
+        <p style="margin-bottom:1.5rem">A billing architecture that adapts to the firm's revenue model — not the other way around.</p>
+        <div class="g4" style="margin-bottom:1.5rem">
+            <div class="card">
+                <h3 style="color:var(--gold)">Design Mode</h3>
+                <p style="font-size:0.8rem">Milestone fees tied to deliverables. GST tracking. Expense reimbursement. Overdue alerts at 7, 14, 30 days.</p>
+            </div>
+            <div class="card">
+                <h3 style="color:var(--gold)">Dual Mode</h3>
+                <p style="font-size:0.8rem">Collect fee from client AND pay execution vendors. Real-time dual-side profitability. D2V's exact workflow.</p>
+            </div>
+            <div class="card">
+                <h3 style="color:var(--gold)">RA Billing</h3>
+                <p style="font-size:0.8rem">Running Account bills at exact completion %. Retention tracking. Subcontractor bill verification gate.</p>
+            </div>
+            <div class="card">
+                <h3 style="color:var(--gold)">Work Order Mode</h3>
+                <p style="font-size:0.8rem">Contractors submit bills, track payment status, view retained amounts. No full account needed.</p>
+            </div>
+        </div>
+        <div class="g3">
+            <div class="card">
+                <h3>🧾 AI Document Generation <span class="tag built">Built</span></h3>
+                <ul>
+                    <li>GST-compliant invoices with auto-numbering (D2V-2026-0001)</li>
+                    <li>Client proposals with firm branding</li>
+                    <li>Project estimates with BOQ line items</li>
+                    <li>Collection reminders — tone scales with age (14/30/60 days)</li>
+                    <li>Board report financial sections generated automatically</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>💳 Petty Cash Register <span class="tag built">Built</span></h3>
+                <ul>
+                    <li>Per-project petty cash wallets</li>
+                    <li>Balance computed by DB — never stale</li>
+                    <li>Every entry: category, description, receipt</li>
+                    <li>Accountant reconciliation at month end</li>
+                    <li>Audit trail: who spent, when, what for</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>📈 P&L Dashboard <span class="tag built">Built</span></h3>
+                <ul>
+                    <li>Firm-wide: total collected, outstanding, pipeline</li>
+                    <li>Per-project profitability breakdown</li>
+                    <li>Aging report: 30 / 60 / 90 days overdue</li>
+                    <li>Vendor bills payable vs collected</li>
+                    <li>30/60/90-day rolling cash flow forecast</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateUI();
-        }
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Core Modules 3/4</div>
+        <h2>Site <span class="gold">Reality</span> Engine</h2>
+        <p style="margin-bottom:1.5rem">The ground truth layer. Everything that happens on site is logged, verified, and fed to financial and AI modules automatically.</p>
+        <div class="g4">
+            <div class="card">
+                <h3>🧱 Inventory Engine</h3>
+                <ul>
+                    <li><strong>3-Point Daily Logging:</strong> Opening stock → deliveries → closing stock</li>
+                    <li>Auto-calculated daily consumption</li>
+                    <li>Runout prediction: stock ÷ avg usage = days remaining</li>
+                    <li>Alert at &lt; 4 days — PO auto-drafted</li>
+                    <li>BOQ vs Actual variance with AI explanation</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>👷 Labour Management</h3>
+                <ul>
+                    <li>8 categories: Mason, Carpenter, Plumber, Electrician, Painter, Sithal, Tiler, General</li>
+                    <li>Daily count: male + female per category</li>
+                    <li>Auto-calculated daily cost at wage rates</li>
+                    <li>Contractor bill generation from attendance logs</li>
+                    <li>Claimed hours vs logged hours verification</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🏗️ Equipment / P&M <span class="tag new">New</span></h3>
+                <ul>
+                    <li>Plant & Machinery daily logging (civil firms)</li>
+                    <li>Active hours vs idle hours tracked</li>
+                    <li>Idle alert: expensive equipment idle 4+ hours</li>
+                    <li>Rental cost auto-calculated: rate × hours</li>
+                    <li>Equipment utilization report per project</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>📋 Daily Progress Report</h3>
+                <ul>
+                    <li>AI drafts narrative from: tasks + photos + labour + materials</li>
+                    <li>QA/QC test results included (cube tests, waterproofing)</li>
+                    <li>Human reviews and approves before saving</li>
+                    <li>PDF export with firm branding</li>
+                    <li>7PM escalation if day not closed by SE</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card" style="background:var(--gold-dim);border-color:var(--gold-border)">
+            <p style="color:var(--text)"><strong class="gold">The Daily Enforcement Loop:</strong> Site engineer opens app → morning checklist gates tasks → executes with photo proof → evening checklist required → AI drafts DPR → PM + Owner receive summary. If evening not completed by 7PM → automated escalation fires. Daily site logging takes under 2 minutes.</p>
+        </div>
+    </div>
+</div>
 
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            updateUI();
-        }
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Core Modules 4/4 · Omni-Channel Input <span class="tag new">New</span></div>
+        <h2>Data gets in through <span class="gold">any channel</span>.<br>It all becomes structured truth.</h2>
+        <p style="margin-bottom:2rem">The biggest friction in construction software is manual data entry. Arcflow eliminates it with 4 input modes that convert unstructured communication into formal, auditable records.</p>
+        <div class="g2">
+            <div class="card">
+                <h3>🎤 Voice-to-MOM</h3>
+                <p style="margin:0.5rem 0">Architect finishes a client meeting. Taps microphone in app:</p>
+                <div class="terminal">
+                    <div class="prompt">🎙 "Client wants marble in the master bath. Budget increase ₹80,000. Delivery by April."</div>
+                    <div style="margin-top:0.5rem">
+                        <div class="response">✓ Transcribed</div>
+                        <div class="response">✓ MOM PDF generated</div>
+                        <div class="response">✓ Variation RFI drafted (₹80,000 cost impact)</div>
+                        <div class="response">✓ Procurement task created (marble, April deadline)</div>
+                    </div>
+                </div>
+                <p>Formal Minutes of Meeting ready in 30 seconds. Zero typing.</p>
+            </div>
+            <div class="card">
+                <h3>📸 Screenshot Scanner</h3>
+                <p style="margin:0.5rem 0">PM gets critical client message on WhatsApp. Screenshots it, uploads to Arcflow:</p>
+                <div class="terminal">
+                    <div class="prompt">📎 [client_whatsapp_screenshot.jpg uploaded]</div>
+                    <div style="margin-top:0.5rem">
+                        <div class="response">✓ Vision AI reads text</div>
+                        <div class="response">✓ Logs to communication timeline</div>
+                        <div class="response">✓ Identifies: change request detected</div>
+                        <div class="warn">⚠ Draft Decision RFI? [Yes / No]</div>
+                    </div>
+                </div>
+                <p>WhatsApp messages become auditable records automatically.</p>
+            </div>
+            <div class="card">
+                <h3>📧 Smart Paste</h3>
+                <p style="margin:0.5rem 0">Client sends a long email with 6 different requests. Paste it in:</p>
+                <div class="terminal">
+                    <div class="prompt">📋 [long client email pasted]</div>
+                    <div style="margin-top:0.5rem">
+                        <div class="response">✓ 3 tasks identified → created</div>
+                        <div class="response">✓ 2 decisions needed → drafted</div>
+                        <div class="response">✓ 1 payment query → finance flagged</div>
+                        <div class="dim">Communication log entry saved</div>
+                    </div>
+                </div>
+                <p>One paste = structured actionable items distributed to the right people.</p>
+            </div>
+            <div class="card">
+                <h3>⌨️ Direct Entry</h3>
+                <p style="margin:0.5rem 0">Standard structured form entry for formal logging, always available as the baseline input method.</p>
+                <ul style="margin-top:0.8rem">
+                    <li>Tasks, decisions, materials, labour — all have clean form UIs</li>
+                    <li>Validation at field level — no missing data submitted</li>
+                    <li>AI suggestions on form fields based on project context</li>
+                    <li>Mobile-optimized for site engineers on construction sites</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-        document.addEventListener('keydown', (e) => {
-            if(e.key === 'ArrowRight') nextSlide();
-            if(e.key === 'ArrowLeft') prevSlide();
-        });
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">— Integrations & Connectors</div>
+        <h2>Works with the tools your<br><span class="gold">firm already uses.</span></h2>
+        <p style="margin-bottom:2rem;max-width:800px">Arcflow connects to your existing workflow. No migration. No disruption. Just instant intelligence on top of every tool your team is already using.</p>
+
+        <h3 style="margin-top: 1rem; margin-bottom: 1rem; font-size: 1.1rem">Phase 2C — Live Connectors</h3>
         
-        // Initialize
-        updateUI();
-    </script>
+        <div class="g3">
+            <div class="card">
+                <h3><span style="margin-right:0.4rem">✉️</span>Gmail</h3>
+                <p style="font-size:0.8rem;margin:0.2rem 0 0.8rem;color:var(--text)">Client email intelligence</p>
+                <p>AI reads incoming client emails → classifies as change request / payment query / complaint → surfaces in Communication Hub. Replies sent FROM your firm's Gmail address.</p>
+                <div style="margin-top:1rem">
+                    <span class="tag live">Live · Prompt 11</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><span style="margin-right:0.4rem">💬</span>WhatsApp Business</h3>
+                <p style="font-size:0.8rem;margin:0.2rem 0 0.8rem;color:var(--text)">India's primary communication channel</p>
+                <p>Client messages routed into Arcflow automatically. Collection reminders, DPR summaries, task nudges sent as WhatsApp messages. Architects get 5-minute response times vs 5-day email delays.</p>
+                <div style="margin-top:1rem">
+                    <span class="tag live">Live · Prompt 11</span>
+                    <span class="tag live" style="background:rgba(34,197,94,0.2)">🇮🇳 India Priority</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span style="margin-right:0.4rem">📅</span>Google Calendar</h3>
+                <p style="font-size:0.8rem;margin:0.2rem 0 0.8rem;color:var(--text)">Deadline + meeting sync</p>
+                <p>Task due dates create calendar events. Site visits block PM calendars. Payment milestones trigger 7-day advance reminders. Bidirectional sync.</p>
+                <div style="margin-top:1rem">
+                    <span class="tag live">Live · Prompt 11</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span style="margin-right:0.4rem">📁</span>Google Drive</h3>
+                <p style="font-size:0.8rem;margin:0.2rem 0 0.8rem;color:var(--text)">Drawing & document sync</p>
+                <p>Architect uploads drawing to connected Drive folder → Arcflow detects, asks which project, imports with version control applied automatically. Zero double storage.</p>
+                <div style="margin-top:1rem">
+                    <span class="tag live">Live · Prompt 11</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span style="margin-right:0.4rem">🎥</span>Google Meet</h3>
+                <p style="font-size:0.8rem;margin:0.2rem 0 0.8rem;color:var(--text)">Auto meeting links</p>
+                <p>Every client meeting logged in Arcflow auto-generates a Meet link. Post-meeting: AI transcribes recording → generates formal MOM PDF → auto-creates tasks and decisions.</p>
+                <div style="margin-top:1rem">
+                    <span class="tag live">Live · Prompt 11</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><span style="margin-right:0.4rem">🔐</span>Biometric Systems</h3>
+                <p style="font-size:0.8rem;margin:0.2rem 0 0.8rem;color:var(--text)">Site attendance automation</p>
+                <p>Biometric machine on site syncs daily attendance directly to Arcflow's Labour module. Eliminates manual labour count. Wage calculation automated. Compatible with standard BLE/API biometric devices.</p>
+                <div style="margin-top:1rem">
+                    <span class="tag live">Live · Prompt 11</span>
+                    <span class="tag live">Investor Verified</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        
+        <h3 style="margin-bottom:0.8rem">How Data Flows</h3>
+        <div class="terminal">
+            <div class="dim"># Example: Unstructured WhatsApp input converted to structured data</div>
+            <div class="prompt" style="margin-top:0.8rem">💬 [WhatsApp] Client: "Let's proceed with the Italian marble for the lobby."</div>
+            <div style="margin-top:0.5rem">
+                <div class="response">✓ Message ingested via WhatsApp Business API</div>
+                <div class="response">✓ AI extracts intent: Material Approval</div>
+                <div class="response">✓ Arcflow locates pending Decision RFI → Status updated to: Approved</div>
+                <div class="warn">⚠ Cost variance detected vs BOQ budget (+₹45,000)</div>
+                <div class="response">✓ Variation milestone drafted for PM review</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">The Brain</div>
+        <h2>Central <span class="gold">Intelligence</span> — query your entire operation in plain English.</h2>
+        <p style="margin-bottom:1.5rem">All modules feed into one AI Brain accessible from every page. Not a chatbot — a command interface with real tool execution across your entire firm's data.</p>
+        <div class="g2">
+            <div>
+                <div class="terminal" style="margin-bottom:1rem">
+                    <div class="prompt">You: "Which sites are at risk right now?"</div>
+                    <div class="response" style="margin-top:0.5rem">Scanning 4 active sites...</div>
+                    <div class="danger">ECR Residence — HIGH RISK</div>
+                    <div class="dim">3 tasks overdue. ₹1.2L collection pending 38 days. Material runout in 2 days.</div>
+                    <div class="warn" style="margin-top:0.3rem">Royal Gardens — MEDIUM RISK</div>
+                    <div class="dim">Labour cost 18% over foundation budget. No DPR yesterday.</div>
+                    <div class="response" style="margin-top:0.3rem">Annanagar Villa — HEALTHY ✓</div>
+                </div>
+                <div class="terminal">
+                    <div class="prompt">You: "Fix the ECR collection situation."</div>
+                    <div class="response" style="margin-top:0.5rem">✓ Collection reminder drafted (firm tone — 38 days)</div>
+                    <div class="response">✓ Escalation email to client drafted</div>
+                    <div class="warn">⚠ Both ready for your review before sending.</div>
+                    <div class="dim">AI never sends autonomously. Human approves first.</div>
+                </div>
+            </div>
+            <div>
+                <div class="card" style="margin-bottom:1rem">
+                    <h3>Query Tools (Auto-Execute)</h3>
+                    <p style="font-size:0.8rem">Dashboard snapshot · Project health · Task status · Collection report · Inventory stock · Labour summary · Scope leakage · Cash flow · Team workload · Client profile · Activity log</p>
+                </div>
+                <div class="card" style="margin-bottom:1rem">
+                    <h3>Action Tools (Approval Required)</h3>
+                    <p style="font-size:0.8rem">Create task · Record payment · Create decision · Draft collection reminder · Generate DPR · Generate report · Resolve decision · Create variation milestone</p>
+                </div>
+                <div class="card" style="background:rgba(239,68,68,0.05);border-color:rgba(239,68,68,0.2)">
+                    <h3 style="color:var(--danger)">Safety Protocol — Invariant</h3>
+                    <p style="font-size:0.8rem">AI Brain never executes financial transactions, sends external communications, or modifies records without explicit human approval. Every action tool creates a pending approval — not a direct DB write.</p>
+                </div>
+            </div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--muted)"><strong style="color:var(--text)">Access:</strong> Owner · Admin · Accountant · PM · Architect · Interior Designer — scoped to their data. Site engineers, drafters, consultants, clients, vendors: no access.</p>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Agentic AI Workforce</div>
+        <h2><span class="gold">6 Autonomous Agents</span> working around the clock.</h2>
+        <p style="margin-bottom:1.5rem">Not chatbots. Autonomous agents with their own triggers, logic, and action queues. They draft, alert, verify, and protect — then wait for human approval before executing.</p>
+        <div class="g3">
+            <div class="agent-card">
+                <span class="agent-icon">🧑‍💼</span>
+                <h4>Chief of Staff Agent</h4>
+                <p>Synthesizes all project data into a prioritized Monday morning board brief. Identifies operational risks, drafts collection actions, queues them for approval.</p>
+                <span class="agent-trigger">⏰ Every Monday 7:00 AM</span>
+            </div>
+            <div class="agent-card">
+                <span class="agent-icon">💰</span>
+                <h4>Financial Controller Agent</h4>
+                <p>Monitors every unpaid milestone daily. Drafts collection reminders with tone calibrated to age: gentle at 14 days, firm at 30, legal at 60. Predicts cash gaps 30 days ahead.</p>
+                <span class="agent-trigger">⏰ Daily 9:00 AM · Threshold-triggered</span>
+            </div>
+            <div class="agent-card">
+                <span class="agent-icon">🚨</span>
+                <h4>Site Sentinel Agent</h4>
+                <p>Scans silently every 6 hours. Fires only when thresholds are breached: task overdue 48h, material runout &lt;2 days, idle equipment &gt;4h, cash gap &lt;30 days.</p>
+                <span class="agent-trigger">⏰ Every 6 hours · Silent unless breach</span>
+            </div>
+            <div class="agent-card">
+                <span class="agent-icon">🛡️</span>
+                <h4>Commercial Guardian Agent</h4>
+                <p>Triggers on every new task creation after scope lock. Compares to BOQ baseline. Flags unbilled additions, drafts variation orders, protects every rupee of margin.</p>
+                <span class="agent-trigger">⚡ Event: New task created</span>
+            </div>
+            <div class="agent-card">
+                <span class="agent-icon">🚀</span>
+                <h4>Kickoff Agent</h4>
+                <p>On new project creation, finds 3 similar past projects, pre-populates phases, tasks, milestones, team assignments, and drafts a client welcome message. Setup in 2 minutes.</p>
+                <span class="agent-trigger">⚡ Event: New project created</span>
+            </div>
+            <div class="agent-card">
+                <span class="agent-icon">📦</span>
+                <h4>Procurement Copilot Agent <span class="tag new" style="font-size:0.55rem">New</span></h4>
+                <p>Reads vendor quote PDFs, compares against locked BOQ rates, recommends PO awards based on vendor intelligence scores. Flags any quote exceeding BOQ budget.</p>
+                <span class="agent-trigger">⚡ Event: Quote received / PO needed</span>
+            </div>
+        </div>
+        <div class="card" style="background:rgba(239,68,68,0.04);border-color:rgba(239,68,68,0.15);margin-top:0.5rem">
+            <p style="font-size:0.8rem"><strong style="color:var(--text)">Safety Invariants (cannot be overridden):</strong> Agents have full read access. Agents NEVER write to business tables directly. All actions create pending approvals. External communications require human sign-off. Unapproved actions expire after 48h.</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Financial Defense</div>
+        <h2>Safeguarding <span class="gold">every rupee</span> of margin.</h2>
+        <div class="g2" style="margin-top:1.5rem">
+            <div class="card">
+                <h3>🛡️ Scope Creep Shield + Fee Leakage Detector</h3>
+                <p style="margin:0.5rem 0">Architecture firms lose 10–20% of revenue to unbilled scope additions. Arcflow eliminates this entirely.</p>
+                <ul>
+                    <li><strong>Baseline Lock:</strong> Contract scope locked 48h after project kickoff. Immutable.</li>
+                    <li>Every post-baseline task automatically flagged: potential scope addition</li>
+                    <li>Decision with cost impact but no payment milestone = <strong>fee leakage alert</strong></li>
+                    <li>Dashboard shows: exact unbilled total in ₹</li>
+                    <li><strong>One-click:</strong> Convert to Variation Order → invoice auto-created</li>
+                </ul>
+                <div style="margin-top:1rem;display:flex;gap:0.5rem">
+                    <span style="background:rgba(34,197,94,0.1);color:var(--success);border:1px solid rgba(34,197,94,0.2);padding:0.3rem 0.7rem;border-radius:4px;font-size:0.75rem">🟢 0–5%: Healthy</span>
+                    <span style="background:rgba(245,158,11,0.1);color:var(--warn);border:1px solid rgba(245,158,11,0.2);padding:0.3rem 0.7rem;border-radius:4px;font-size:0.75rem">🟡 5–15%: Review</span>
+                    <span style="background:rgba(239,68,68,0.1);color:var(--danger);border:1px solid rgba(239,68,68,0.2);padding:0.3rem 0.7rem;border-radius:4px;font-size:0.75rem">🔴 15%+: Active Leakage</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📈 Predictive Cash Flow Forecast</h3>
+                <p style="margin:0.5rem 0">30/60/90-day rolling cash position. Visibility without a dedicated CFO.</p>
+                <ul>
+                    <li>Inputs: upcoming milestones + client payment history + planned POs + contractor bills</li>
+                    <li><strong>Gap Alert:</strong> "Cash deficit projected in 38 days — collect ECR + MBS invoices first"</li>
+                    <li><strong>Obligation Alert:</strong> "₹2.1L in POs due next month — ensure availability"</li>
+                    <li>Per-project profitability breakdown</li>
+                    <li>Collection priority ranking by impact on cash position</li>
+                </ul>
+            </div>
+        </div>
+        <div class="g2">
+            <div class="card">
+                <h3>🔒 BOQ Baseline Lock</h3>
+                <p>QS locks the BOQ after client sign-off. All subsequent additions require formal Variation RFIs with client approval. Zero silent cost increases.</p>
+            </div>
+            <div class="card">
+                <h3>📊 Subcontractor RA Bill Verification</h3>
+                <p>QS opens subcontractor bill — system pulls actual task completion logs and photo evidence, computes real % complete, flags any variance before payment is released.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Multiplayer Architecture</div>
+        <h2><span class="gold">15 Granular Roles.</span><br>Everyone sees exactly what they need.</h2>
+        <p style="margin-bottom:1.5rem">Information is partitioned by role at the database level — PostgreSQL Row Level Security, not just UI visibility. Users cannot access data outside their scope even via API.</p>
+        <div class="g3">
+            <div>
+                <div class="role-group">
+                    <h4>Leadership & Admin</h4>
+                    <div><span class="role-chip gold">Owner</span><span class="role-chip gold">Admin</span></div>
+                </div>
+                <div class="card" style="margin-top:0.8rem;padding:1rem">
+                    <p style="font-size:0.8rem"><strong>Owner:</strong> Supreme access. P&L, board reports, all agents, billing. One per firm.</p>
+                    <p style="font-size:0.8rem;margin-top:0.4rem"><strong>Admin:</strong> Full ops access minus subscription management.</p>
+                </div>
+            </div>
+            <div>
+                <div class="role-group">
+                    <h4>Financial & Commercial</h4>
+                    <div>
+                        <span class="role-chip gold">Accountant</span>
+                        <span class="role-chip gold">QS / Estimator</span>
+                        <span class="role-chip gold">Purchase Manager</span>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:0.8rem;padding:1rem">
+                    <p style="font-size:0.8rem"><strong>Accountant:</strong> Full finance access. Invoices, P&L, collections. No design/task ops.</p>
+                    <p style="font-size:0.8rem;margin-top:0.4rem"><strong>QS:</strong> Locks BOQ, verifies subcontractor RA bills vs site logs.</p>
+                    <p style="font-size:0.8rem;margin-top:0.4rem"><strong>Purchase Manager:</strong> Issues POs, manages vendors, compares quotes.</p>
+                </div>
+            </div>
+            <div>
+                <div class="role-group">
+                    <h4>Design & Management</h4>
+                    <div>
+                        <span class="role-chip">Project Manager</span>
+                        <span class="role-chip">Architect</span>
+                        <span class="role-chip">Interior Designer</span>
+                        <span class="role-chip">Drafter</span>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:0.8rem;padding:1rem">
+                    <p style="font-size:0.8rem"><strong>PM:</strong> Assigned projects only. Finance summary. Task + variation approval.</p>
+                    <p style="font-size:0.8rem;margin-top:0.4rem"><strong>Architect:</strong> Design authority, GFC stamp, task quality approval, XP awards.</p>
+                    <p style="font-size:0.8rem;margin-top:0.4rem"><strong>Interior Designer:</strong> Rooms, FF&E, finishes — no civil/finance data.</p>
+                </div>
+            </div>
+            <div>
+                <div class="role-group">
+                    <h4>Site & Execution</h4>
+                    <div>
+                        <span class="role-chip">QA/QC Engineer</span>
+                        <span class="role-chip">Site Engineer</span>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:0.8rem;padding:1rem">
+                    <p style="font-size:0.8rem"><strong>QA/QC:</strong> Quality gatekeeper. Approves/rejects civil tasks. Blocks dependent work if tests fail.</p>
+                    <p style="font-size:0.8rem;margin-top:0.4rem"><strong>Site Engineer:</strong> Mobile-first UX. Daily SOPs enforced. Zero financial data visibility.</p>
+                </div>
+            </div>
+            <div>
+                <div class="role-group">
+                    <h4>Externals</h4>
+                    <div>
+                        <span class="role-chip">Client</span>
+                        <span class="role-chip">Consultant</span>
+                        <span class="role-chip">Subcontractor</span>
+                        <span class="role-chip">Vendor</span>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:0.8rem;padding:1rem">
+                    <p style="font-size:0.8rem"><strong>Client:</strong> Curated portal. Progress photos, milestone status, decision approvals.</p>
+                    <p style="font-size:0.8rem;margin-top:0.4rem"><strong>Subcontractor:</strong> Assigned tasks, upload proof, submit RA bills.</p>
+                    <p style="font-size:0.8rem;margin-top:0.4rem"><strong>Vendor:</strong> POs only. Confirm delivery, upload challan.</p>
+                </div>
+            </div>
+            <div>
+                <div class="role-group">
+                    <h4>System Actor</h4>
+                    <div><span class="role-chip gold">AI Agents</span></div>
+                </div>
+                <div class="card" style="margin-top:0.8rem;padding:1rem;background:rgba(201,168,76,0.05);border-color:var(--gold-border)">
+                    <p style="font-size:0.8rem"><strong>6 AI Agents:</strong> Owner-level read access. All writes queued for human approval. Cannot send external comms autonomously. 48h expiry on unapproved actions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Quality Control Architecture <span class="tag new">New</span></div>
+        <h2>The <span class="gold">Quality Gate</span> — no substandard work passes through.</h2>
+        <p style="margin-bottom:1.5rem">For civil and MEP firms, critical structural tasks go through a mandatory QA/QC verification layer before completion is recorded or payment released.</p>
+        <div class="g2" style="margin-bottom:1.5rem">
+            <div class="card">
+                <h3>The Task Status Flow (Civil Projects)</h3>
+                <div class="flow-row" style="margin-top:1rem;flex-direction:column;align-items:flex-start;gap:0.8rem">
+                    <div style="display:flex;align-items:center;gap:0.8rem">
+                        <span class="flow-step">📋 Todo</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step">⚙️ In Progress</span>
+                        <span class="flow-arrow">→</span>
+                        <span class="flow-step blocked">📸 Pending QC (photo required)</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:0.8rem;padding-left:2rem">
+                        <span class="flow-arrow" style="transform:rotate(90deg)">↓</span>
+                        <span style="font-size:0.75rem;color:var(--muted)">QA/QC Engineer reviews test results + photos</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:0.8rem">
+                        <span class="flow-step pass">✅ QC Approved → Pending Architect Approval</span>
+                        <span class="flow-arrow">OR</span>
+                        <span class="flow-step blocked">❌ QC Rejected → Back to In Progress + reason</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:0.8rem">
+                        <span class="flow-step pass">🏆 Done + XP Awarded</span>
+                        <span style="font-size:0.75rem;color:var(--muted)">← Only after QC + Architect both approve</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card" style="margin-bottom:1rem">
+                    <h3>QA/QC Engineer Capabilities</h3>
+                    <ul>
+                        <li>Sees queue of tasks in <strong>pending_qc</strong> state</li>
+                        <li>Reviews photo evidence + uploads test results</li>
+                        <li>Approves or rejects with mandatory reason</li>
+                        <li>Can block all dependent tasks if critical test fails</li>
+                        <li>Rejection logged in DPR with photo evidence</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>What Requires QC Gate</h3>
+                    <ul>
+                        <li>Structural concrete pours (cube test required)</li>
+                        <li>Waterproofing application (flood test)</li>
+                        <li>MEP rough-in (pressure test)</li>
+                        <li>Foundation laying (levels verified)</li>
+                        <li>Any task marked <strong>requires_qc_check = true</strong> by PM</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="background:var(--gold-dim);border-color:var(--gold-border)">
+            <p style="color:var(--text);font-size:0.875rem"><strong class="gold">Design firms:</strong> QC gate is disabled by default — tasks go directly todo → in_progress → pending_approval → done. The gate activates only when <span style="color:var(--gold)">requires_qc_check = true</span> is set, ensuring zero disruption to existing D2V workflows while unlocking civil contractor market.</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Measuring Success</div>
+        <h2>Key Metrics & <span class="gold">XP Gamification</span></h2>
+        <div class="g2" style="margin-top:1.5rem">
+            <div class="card">
+                <h3>🎯 Operational Targets</h3>
+                <ul>
+                    <li><strong>BOQ Accuracy:</strong> &lt;15% variance from actuals</li>
+                    <li><strong>Delay Reduction:</strong> 30% vs industry average</li>
+                    <li><strong>Cost Overruns:</strong> Reduced by 20%</li>
+                    <li><strong>Manual Reporting:</strong> 80% eliminated</li>
+                    <li><strong>Site Log Time:</strong> Under 2 minutes per day</li>
+                    <li><strong>Morning Financial Check:</strong> Under 30 seconds</li>
+                    <li><strong>Collection Speed:</strong> Invoice-to-payment 40% faster</li>
+                    <li><strong>WhatsApp Dependency:</strong> Reduced by 80%+</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🏆 Experience Point System</h3>
+                <ul>
+                    <li>XP awarded only when <strong>Architect/QC verifies photo evidence</strong> — not on self-completion</li>
+                    <li>Late submission: <strong>-20% XP per day</strong></li>
+                    <li>QC Rejection: <strong>0 XP</strong>. Rework gets reduced XP on re-completion</li>
+                    <li>Levels: Apprentice → Junior → Senior → Principal → Partner</li>
+                    <li>Redemption: <strong>1 XP = ₹2</strong> (firm-configurable rate)</li>
+                    <li>Redemption request → Accountant/Owner approval → next payroll</li>
+                    <li>Firm-wide leaderboard + per-project ranking</li>
+                    <li>Weekly top performer recognition notification</li>
+                </ul>
+            </div>
+        </div>
+        <div class="metric-grid" style="margin-top:1rem">
+            <div class="metric-card"><div class="big">15%</div><div class="lbl">Max BOQ variance target</div></div>
+            <div class="metric-card"><div class="big">30%</div><div class="lbl">Delay reduction goal</div></div>
+            <div class="metric-card"><div class="big">80%</div><div class="lbl">Manual reporting eliminated</div></div>
+            <div class="metric-card"><div class="big">&lt;2m</div><div class="lbl">Daily site log target</div></div>
+            <div class="metric-card"><div class="big">40%</div><div class="lbl">Faster invoice collection</div></div>
+            <div class="metric-card"><div class="big">6</div><div class="lbl">AI agents working 24/7</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">The Moat</div>
+        <h2>Network effects make<br><span class="gold">Arcflow impossible to leave.</span></h2>
+        <p style="margin-bottom:2rem">This isn't just a firm tool. It's a project network. Every invitation pulls another firm into the ecosystem.</p>
+        <div class="g3" style="margin-bottom:1.5rem">
+            <div class="card accent-left">
+                <h3>Architect invites Contractor</h3>
+                <p>Contractor joins Arcflow to see their work orders and submit bills. They're now in the ecosystem.</p>
+            </div>
+            <div class="card accent-left">
+                <h3>Contractor invites Vendor</h3>
+                <p>Vendor gets digital POs, confirms deliveries through Arcflow. Another firm onboarded without sales effort.</p>
+            </div>
+            <div class="card accent-left">
+                <h3>Vendor competes on Arcflow</h3>
+                <p>Vendor builds their intelligence score — on-time rate, quality rejections, price competitiveness. They want to stay in the platform.</p>
+            </div>
+        </div>
+        <div class="card" style="background:var(--gold-dim);border-color:var(--gold-border);margin-bottom:1.5rem">
+            <p style="color:var(--text);font-size:0.95rem"><strong class="gold">The WhatsApp Principle:</strong> WhatsApp became dominant because everyone is already on it. When an architect brings their contractor onto Arcflow, the contractor brings their vendors. The entire supply chain becomes digitally connected. Nobody switches because the whole project ecosystem is already there.</p>
+        </div>
+        <div class="g2">
+            <div class="card">
+                <h3>Client Portal (Separate Subdomain)</h3>
+                <ul>
+                    <li>client.arcflow.io/{firm-slug} — branded per firm</li>
+                    <li>Client sees: curated progress photos, phase timeline, milestones</li>
+                    <li>Approve/reject decisions with digital signature</li>
+                    <li>Co-owner support: husband + wife each get own login</li>
+                    <li>Invoice PDF download, payment history</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Vendor Intelligence Score</h3>
+                <ul>
+                    <li>On-time delivery rate per material category</li>
+                    <li>Quality rejection history from site logs</li>
+                    <li>Price competitiveness vs BOQ benchmark rates</li>
+                    <li>Response time on PO confirmations</li>
+                    <li>"Avoid for critical path" flag if score below threshold</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Platform Memory</div>
+        <h2>Every project makes the<br><span class="gold">next one smarter.</span></h2>
+        <p style="margin-bottom:1.5rem">Arcflow doesn't just manage projects — it learns from them. Historical data powers every future decision automatically.</p>
+        <div class="g3">
+            <div class="card">
+                <h3>🗂️ Project Template Engine</h3>
+                <ul>
+                    <li>On project completion → AI prompts: "Save as template?"</li>
+                    <li>Captures: phases, tasks, milestones, team structure, durations</li>
+                    <li>New project → AI finds 3 similar past projects</li>
+                    <li>Pre-populates phases, tasks, milestones, team assignments</li>
+                    <li>Timeline suggestion based on project type + sqft</li>
+                    <li>Fee structure suggestion from historical data</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>📊 Board Report Generator</h3>
+                <ul>
+                    <li>One-click PDF — investor-ready, not spreadsheet export</li>
+                    <li>All projects status: phase, health, delays</li>
+                    <li>Firm P&L + pipeline value + collection health</li>
+                    <li>Cash flow 90-day projection with gap highlights</li>
+                    <li>Team performance across all roles</li>
+                    <li>Automatically emailed to Owner every Monday</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🧠 Arcflow Brain Memory</h3>
+                <ul>
+                    <li>Vendor reliability score built from delivery history</li>
+                    <li>Cost patterns: cement price per bag by supplier by month</li>
+                    <li>Delay cause analysis: what triggered overruns historically</li>
+                    <li>Client DNA: payment speed, revision cycles, friction score</li>
+                    <li>Each project makes predictive analytics more accurate</li>
+                    <li>Benchmarking: how this project compares to similar past ones</li>
+                </ul>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="card" style="background:var(--gold-dim);border-color:var(--gold-border)">
+            <p style="color:var(--text)"><strong class="gold">Year 3 Vision:</strong> Arcflow anonymously aggregates data across 10,000 firms. An architect in Chennai starting a 2,500 sqft residential project gets: the industry-accurate cost benchmark, the average delay risk for monsoon season, and the top-rated granite vendors in their area — all from the collective intelligence of every project run on the platform.</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Build Roadmap</div>
+        <h2>From <span class="gold">foundation</span> to industry standard.</h2>
+        <div class="timeline" style="margin-top:2rem">
+            <div class="timeline-item done">
+                <div class="tl-label">Phases 1–2 ✓ Complete</div>
+                <div class="tl-title">Foundation</div>
+                <p style="font-size:0.75rem">Auth, Projects, BOQ, Tasks, Multi-Firm Config, Finance Engine, AI Documents. 89 API routes live.</p>
+            </div>
+            <div class="timeline-item active">
+                <div class="tl-label">Phase 2B → In Progress</div>
+                <div class="tl-title">Decisions Engine</div>
+                <p style="font-size:0.75rem">RFI system, 7 decision types, variation→finance automation, WhatsApp import, omni-channel input.</p>
+            </div>
+            <div class="timeline-item upcoming">
+                <div class="tl-label">Phase 3 · ~15 days</div>
+                <div class="tl-title">Data Infrastructure</div>
+                <p style="font-size:0.75rem">Activity log, notifications, site engineer SOPs, client directory, file vault + GFC lock, inventory, labour, equipment, DPR.</p>
+            </div>
+            <div class="timeline-item upcoming">
+                <div class="tl-label">Phase 4 · ~8 days</div>
+                <div class="tl-title">Intelligence Layer</div>
+                <p style="font-size:0.75rem">Scope Creep Shield, team performance, AI Brain full deployment, all 6 agents with approval queue.</p>
+            </div>
+            <div class="timeline-item upcoming">
+                <div class="tl-label">Phase 5 · ~10 days</div>
+                <div class="tl-title">Moat Features</div>
+                <p style="font-size:0.75rem">Cash flow forecast, client portal, XP redemption, project templates, board report generator.</p>
+            </div>
+        </div>
+        <div class="g4" style="margin-top:1.5rem">
+            <div class="card" style="text-align:center">
+                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--gold)">Month 6</div>
+                <p style="font-size:0.8rem">10 paying firms in Chennai</p>
+            </div>
+            <div class="card" style="text-align:center">
+                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--gold)">Month 12</div>
+                <p style="font-size:0.8rem">100 firms across Tamil Nadu</p>
+            </div>
+            <div class="card" style="text-align:center">
+                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--gold)">Month 24</div>
+                <p style="font-size:0.8rem">1,000 firms across India</p>
+            </div>
+            <div class="card" style="text-align:center">
+                <div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--gold)">Month 36</div>
+                <p style="font-size:0.8rem">UAE + Southeast Asia expansion</p>
+            </div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem">Phase 6 (Post-MVP): WhatsApp Business API · Flutter mobile app · AI BOQ from drawings · RERA compliance · Razorpay in-app payments · Tally sync · Revit plugin</p>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area">
+        <div class="label">Business Model</div>
+        <h2>Multiple revenue streams.<br><span class="gold">Each one compounds.</span></h2>
+        <div class="g3" style="margin-top:1.5rem">
+            <div class="card gold-top">
+                <h3>💳 SaaS Subscription</h3>
+                <p style="margin:0.5rem 0">Per-firm, tiered by seats. Every firm that joins pays monthly. Sticky — switching means losing all project history and vendor intelligence.</p>
+                <ul style="margin-top:0.8rem">
+                    <li>Starter: solo architects and small studios</li>
+                    <li>Studio: 2–10 seat firms with execution</li>
+                    <li>Enterprise: large builders and developers</li>
+                </ul>
+            </div>
+            <div class="card gold-top">
+                <h3>⚡ AI Credits</h3>
+                <p style="margin:0.5rem 0">Usage-based billing for AI-heavy operations. Every power feature has a transparent credit cost.</p>
+                <ul style="margin-top:0.8rem">
+                    <li>Voice-to-MOM transcription + drafting</li>
+                    <li>Screenshot scan + decision extraction</li>
+                    <li>AI Brain complex queries</li>
+                    <li>Board report generation</li>
+                    <li>BOQ analysis and variance explanation</li>
+                </ul>
+            </div>
+            <div class="card gold-top">
+                <h3>🌐 Platform / Marketplace</h3>
+                <p style="margin:0.5rem 0">As the network grows, Arcflow becomes the marketplace for the built environment.</p>
+                <ul style="margin-top:0.8rem">
+                    <li>Vendor marketplace: transaction fee on POs</li>
+                    <li>Enterprise white-label for large developers</li>
+                    <li>Benchmarking data subscription for investors and banks</li>
+                    <li>RERA compliance report generation (Phase 6)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="g2">
+            <div class="card">
+                <h3>Why Firms Don't Churn</h3>
+                <ul>
+                    <li>All project history, vendor scores, templates live inside Arcflow</li>
+                    <li>The entire supply chain is already connected on the platform</li>
+                    <li>XP redemptions are tied to the firm's Arcflow account</li>
+                    <li>Client portals are Arcflow URLs — clients expect them</li>
+                    <li>AI predictions improve with every additional project</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Competitive Differentiation</h3>
+                <ul>
+                    <li>Only platform with system-enforced SOPs (not suggestions)</li>
+                    <li>GFC Lock — unique to Arcflow, no competitor has this</li>
+                    <li>6 specialized agents vs generic AI copilots</li>
+                    <li>15 roles covering the entire built environment ecosystem</li>
+                    <li>Indian market native: GST, ₹ formatting, Tamil + English</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide">
+    <div class="scroll-area" style="display:flex;flex-direction:column;justify-content:center;min-height:100%">
+        <div class="label">The Vision</div>
+        <h2 style="font-size:clamp(2rem,5vw,4rem);max-width:800px">
+            Arcflow becomes the<br>
+            <span class="gold">universal operating standard</span><br>
+            for the built environment.
+        </h2>
+        <p style="font-size:1.1rem;max-width:600px;margin-top:1rem;color:var(--text);line-height:1.6">
+            Not just a project management tool. The intelligence layer that connects every architect, engineer, contractor, vendor, and client — from Chennai to Dubai to Singapore.
+        </p>
+        <div class="g4" style="margin-top:3rem">
+            <div class="card" style="text-align:center">
+                <div style="font-size:1.8rem;margin-bottom:0.5rem">🏗️</div>
+                <p style="font-size:0.8rem"><strong style="color:var(--text)">Year 1</strong><br>100 firms. Proof of product-market fit in South India.</p>
+            </div>
+            <div class="card" style="text-align:center">
+                <div style="font-size:1.8rem;margin-bottom:0.5rem">🇮🇳</div>
+                <p style="font-size:0.8rem"><strong style="color:var(--text)">Year 2–3</strong><br>1,000–10,000 firms. Category leader in India.</p>
+            </div>
+            <div class="card" style="text-align:center">
+                <div style="font-size:1.8rem;margin-bottom:0.5rem">🌏</div>
+                <p style="font-size:0.8rem"><strong style="color:var(--text)">Year 3–5</strong><br>UAE, Southeast Asia. Global construction network.</p>
+            </div>
+            <div class="card" style="text-align:center">
+                <div style="font-size:1.8rem;margin-bottom:0.5rem">🤖</div>
+                <p style="font-size:0.8rem"><strong style="color:var(--text)">Year 5+</strong><br>AI draws buildings. Arcflow manages everything else.</p>
+            </div>
+        </div>
+        <div class="footer-strip" style="margin-top:4rem">
+            <div class="item"><span>Platform</span><strong>Arcflow.io</strong></div>
+            <div class="item"><span>Version</span><strong>4.0 — Enterprise Edition</strong></div>
+            <div class="item"><span>Built By</span><strong>D2V Architectural Consultancy</strong></div>
+            <div class="item"><span>Roles</span><strong>15 Distinct Access Roles</strong></div>
+            <div class="item"><span>AI Agents</span><strong>6 Autonomous Agents</strong></div>
+        </div>
+    </div>
+</div>
+
+<div class="nav">
+    <button class="nav-btn" onclick="go(-1)">←</button>
+    <span class="nav-counter" id="ctr">1 / 21</span>
+    <button class="nav-btn" onclick="go(1)">→</button>
+</div>
+
+<script>
+    let cur = 0;
+    const slides = document.querySelectorAll('.slide');
+    const ctr = document.getElementById('ctr');
+
+    function update() {
+        slides.forEach((s, i) => {
+            s.classList.toggle('active', i === cur);
+        });
+        ctr.textContent = `${cur + 1} / ${slides.length}`;
+    }
+
+    function go(dir) {
+        cur = (cur + dir + slides.length) % slides.length;
+        update();
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+    });
+
+    update();
+</script>
 </body>
 </html>
